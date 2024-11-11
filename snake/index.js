@@ -95,16 +95,6 @@ function move(){
     }
 }
 
-function checkCollision(){
-
-}
-
-//Test moving func
-//setInterval(() => {
-//   move();  //move first
-//   draw(); // draw new position
-//}, 200);
-
 //start game function 
 
 function startGame() {
@@ -116,8 +106,42 @@ function startGame() {
         //checkCollision();
         draw();
     }, gameSpeedDelay);
-
 }
+
+//Keypress event listener
+function handleKeyPress(event){
+    if(!gameStarted && (event.code === 'Space'|| event.key === ' '))
+    {
+        console.log("space key pressed")
+        startGame();
+    }else{
+    switch (event.key) {
+        case 'ArrowUp':
+            direction = 'up';
+            break;
+        case 'ArrowLeft':
+            direction = 'left';
+            break;
+        case 'ArrowDown':
+            direction = 'down';
+            break;
+        case 'ArrowRight':
+            direction = 'right';    
+            break;
+        }
+    }   
+}
+document.addEventListener('keydown', handleKeyPress);
+
+
+//Test moving func
+//setInterval(() => {
+//   move();  //move first
+//   draw(); // draw new position
+//}, 200);
+
+
+
 
 
 //testing draw function

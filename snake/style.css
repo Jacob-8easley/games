@@ -39,7 +39,7 @@ body, .snake{
 
 }
 
-.instruction-text{
+#instruction-text{
     position: absolute;
     top: 60%;
     color: #333;
