@@ -13,7 +13,13 @@ const board = document.getElementById('game-board')
 //define game variables
 const gridSize = 20;
 let snake = [{ x:10, y:10 }];
-let food = generateFood()
+let food = generateFood();
+let direction = 'right';
+let gameInterval;
+let gameSpeedDelay = 200;
+let gameStarted = false;
+const instructionText = document.getElementById('instruction-text');
+const logo = document.getElementById('logo');
 
 // draw game map, snake and food
 function draw() {
@@ -58,11 +64,62 @@ function generateFood(){
 }
 
 
+// moving the snake
+function move(){
+    const head = {...snake[0]};
+    switch (direction) {
+        case 'right':
+            head.x++;
+            break;
+        case 'left':
+            head.x--;
+            break;
+        case 'down':
+            head.y++;
+            break;
+        case 'up':
+            head.y--;
+            break;
+    }
+    snake.unshift(head);
 
+    if (head.x === food.x && head.y === food.y){
+        food = generateFood();
+        clearInterval(); // clear past interval
+        gameInterval= setInterval(()=> {
+            move();
+            draw();
+        },gameSpeedDelay)
+    }else{
+        snake.pop();
+    }
+}
 
+function checkCollision(){
 
+}
+
+//Test moving func
+//setInterval(() => {
+//   move();  //move first
+//   draw(); // draw new position
+//}, 200);
+
+//start game function 
+
+function startGame() {
+    gameStarted = true;//Keep track of if game is running
+    instructionText.style.display = 'none';
+    logo.style.display = 'none';
+    gameInterval = setInterval(() => {
+        move();
+        //checkCollision();
+        draw();
+    }, gameSpeedDelay);
+
+}
 
 
 //testing draw function
 
-draw();
+//draw();
