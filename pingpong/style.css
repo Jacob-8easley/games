@@ -13,8 +13,8 @@ body{
 
 #game-board{
     display: grid;
-    grid-template-columns: repeat(70,10px);
-    grid-template-rows: repeat(70,10px);
+    grid-template-columns: repeat(60,10px);
+    grid-template-rows: repeat(60,10px);
     margin: 5px;
     border:  wheat 1px solid;
 }
@@ -49,24 +49,29 @@ body{
     border:#5a5a5a 1px dotted;
 }
 
-.net{
-    position: fixed;
+#net{
+    position: relative;
+    left: 290px;
     width:10px;
-    height: 100%;
-    color: antiquewhite;
+    height: 600px;
+    background-color: antiquewhite;
 }
 
 .padel-1{
-    position: absolute;
-    color: antiquewhite;
+    position: relative;
+    background-color: antiquewhite;
     width: 10px;
-    height: 40px;
-    border: #5a5a5a 1px dotted;
+    height: 60px;
+    border-style: dotted;
+    border-width: 2px 2px 2px 0px;
+    border-color: #5a5a5a;
 }
 .padel-2{
-    position: absolute;
-    color: antiquewhite;
+    position: relative;
+    background-color: antiquewhite;
     width: 10px;
-    height: 40px;
-    border: #5a5a5a 1px dotted;
+    height: 60px;
+    border-style: dotted;
+    border-width: 2px 0px 2px 2px;
+    border-color: #5a5a5a;
 }
