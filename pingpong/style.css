@@ -1,0 +1,72 @@
+body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    margin: 0;
+    font-family:"VT323", monospace;      
+}
+
+body{
+    background-color: black;
+}
+
+#game-board{
+    display: grid;
+    grid-template-columns: repeat(70,10px);
+    grid-template-rows: repeat(70,10px);
+    margin: 5px;
+    border:  wheat 1px solid;
+}
+
+.scores{
+    display:flex;
+    justify-content: space-between;
+    color: antiquewhite;
+    font-size: 40px;
+    font-weight: bolder;
+    margin: 10px 0
+}
+
+
+#instruction-text{
+    position: absolute;
+    top: 70%;
+    color:antiquewhite;
+    width: 300px;
+    text-align: center;
+    text-transform: capitalize;
+    padding: 30px;
+    margin: 0;
+}
+
+#logo {
+    position: absolute;
+}
+
+.ball{
+    background-color: antiquewhite;
+    border:#5a5a5a 1px dotted;
+}
+
+.net{
+    position: fixed;
+    width:10px;
+    height: 100%;
+    color: antiquewhite;
+}
+
+.padel-1{
+    position: absolute;
+    color: antiquewhite;
+    width: 10px;
+    height: 40px;
+    border: #5a5a5a 1px dotted;
+}
+.padel-2{
+    position: absolute;
+    color: antiquewhite;
+    width: 10px;
+    height: 40px;
+    border: #5a5a5a 1px dotted;
+}
