@@ -2,19 +2,16 @@ const board = document.getElementById('game-board');
 const net = document.getElementById('net');
 let netState = 'none';
 net.style.display = netState;
-const gridSize = 60;
+const gridSize = 300;
 let gameStarted = false;
-let gameInterval;
-let gameSpeedDelay = 500;
 const instructionText = document.getElementById('instruction-text');
 const logo = document.getElementById('logo');
 const player1Score = document.getElementById('player-1');
 const player2Score = document.getElementById('player-2');
-//let padel1 = generatePadel1();
-let padel1Position = {x:1,y:10};
-let player1Direction = 'up';
-//let padel2 = generatePadel2();
-let padel2Position = {x:60,y:46};
+//const padel1 = document.getElementsByClassName('padel-1')
+let padel1Position = {x:5,y:60};
+let padel2Position = {x:gridSize-10,y:gridSize-60};
+
 
 
 
@@ -35,11 +32,14 @@ function setPosition(element,position){
 //draw player padels 
 function drawPlayer1Padel(){
     //if(gameStarted){
+    
     const pPadel1 = createGameElement('div','padel-1');
     
     setPosition(pPadel1, padel1Position);
     
     board.appendChild(pPadel1);
+    board.innerHTML += ''
+    console.log(board.innerHTML);
     
     //}
 }
@@ -56,66 +56,100 @@ function drawPlayer2Padel(){
 
 
 
+const padel1 = document.getElementsByClassName('padel-1')
+const padel2 = document.getElementsByClassName('padel-2')
+
 function draw(){
-    //board.innerHTML ='';
-    
+    //padel1.innerHTML ='';
     drawPlayer1Padel();
-    //drawPlayer2Padel(); 
+    drawPlayer2Padel(); 
     
 }
-
+function drawNet(){
+    netState = 'block';
+    net.style.display = netState;  // displays net
+    board.appendChild(net)
+}
 
 function startGame() {
     gameStarted = true;//Keep track of if game is running
-    instructionText.style.display = 'none';
-    logo.style.display = 'none';
-    netState = 'block';
-    net.style.display = netState;
-    gameInterval= setInterval(()=> {
-        move();
-        //checkCollision();
-        draw();
-    },gameSpeedDelay)
-}
-
-
-// move padel function
-function move(){
-    const player1 = {...padel1Position};
-    switch (player1Direction) {
-        case 'down':
-            console.log('down');
-            player1.y++;
-            break;
-        case 'up':
-            console.log('up');
-            player1.y--;
-            break;
+    while(gameStarted){
+    instructionText.style.display = 'none';// hides instruction text
+    logo.style.display = 'none'; // hides game logo
+    drawNet();
+    
+    draw();
+    console.log('drawn')
+    playerKeyPress();
+    console.log('finished')
+    console.log(padel1);
+    gameStarted = false;
     }
-   //padel1Position.unshift(player1);
 }
 
-
-
-//Keypress event listener
-function player1KeyPress(event){
+//Keypress event listener and padel1 mover
+function playerKeyPress(event){
+    console.log('this time')
     if(!gameStarted && (event.code === 'Space'|| event.key === ' '))
-    {
-        console.log("space key pressed")
-        startGame();
-    }else{
-    switch (event.key) {
-        case 'ArrowUp':
-            player1Direction = 'up';
-            break;
-        case 'ArrowDown':
-            player1Direction = 'down';
-            break;
-        }
-    }   
-}
-document.addEventListener('keydown', player1KeyPress);
+        {
+            console.log("space key pressed")
+            startGame();
+        } 
+    if(event ==='ArrowUp') {   
+        padel1Position.y--;
+    }else if (event ==='ArrowDown'){
+        padel1Position.y++;
+    }
+    else if(event ==='s'){
+        padel2Position.y++;
+    }else if(event === 'w'){
+        padel2Position.y--;
 
+
+    }
+};
+document.addEventListener('keydown', playerKeyPress);
+// document.addEventListener('keydown',player2KeyPress)
+document.onkeydown = (playerKeyPress) => {
+    if (playerKeyPress.key === 'ArrowUp'){
+        console.log('UP')
+        padel1Position.y --;
+        board.innerHTML=''
+        drawNet();
+        draw();
+        console.log(padel1)
+        console.log(padel1Position.y)
+    }
+    else if(playerKeyPress.key === 'ArrowDown'){
+        console.log('Down');
+        board.innerHTML='';
+        drawNet();
+        draw();
+        padel1Position.y++;
+        console.log(padel1)
+        console.log(padel1Position.y)
+    }
+// }
+// document.onkeydown = (player2KeyPress) =>{
+    if(playerKeyPress.key === 'w'){
+        console.log('w');
+        board.innerHTML='';
+        drawNet();
+        draw();
+        padel2Position.y--;
+        console.log(padel2)
+        console.log(padel2Position.y);
+    }
+    else if(playerKeyPress.key === 's'){
+        console.log('s');
+        board.innerHTML='';
+        padel2Position.y++;
+        drawNet();
+        draw();
+        console.log(padel2)
+        console.log(padel2Position.y)
+}
+}
 // creating a function to stop at limits of board
 
 function moveLimits(){
@@ -126,3 +160,9 @@ function moveLimits(){
 
 
 // function to stop padels movements
+function stop(){
+    player1Direction = '';
+};
+//reset page
+//location.reload();
+

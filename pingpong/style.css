@@ -13,8 +13,9 @@ body{
 
 #game-board{
     display: grid;
-    grid-template-columns: repeat(60,10px);
-    grid-template-rows: repeat(60,10px);
+    position: relative;
+    grid-template-columns: repeat(300,2px);
+    grid-template-rows: repeat(300,2px);
     margin: 5px;
     border:  wheat 1px solid;
 }
@@ -50,18 +51,18 @@ body{
 }
 
 #net{
-    position: relative;
-    left: 290px;
+    position: absolute;
+    left: 50%;
     width:10px;
-    height: 600px;
+    height:100%;
     background-color: antiquewhite;
 }
 
 .padel-1{
     position: relative;
     background-color: antiquewhite;
-    width: 10px;
-    height: 60px;
+    width: 8px;
+    height: 56px;
     border-style: dotted;
     border-width: 2px 2px 2px 0px;
     border-color: #5a5a5a;
