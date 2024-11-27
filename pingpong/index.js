@@ -32,24 +32,17 @@ function setPosition(element,position){
 //draw player padels 
 function drawPlayer1Padel(){
     //if(gameStarted){
-    
     const pPadel1 = createGameElement('div','padel-1');
-    
     setPosition(pPadel1, padel1Position);
-    
     board.appendChild(pPadel1);
     board.innerHTML += ''
-    console.log(board.innerHTML);
-    
+   //console.log(board.innerHTML);
     //}
 }
 function drawPlayer2Padel(){
     //if(gameStarted){
-    
     const pPadel2 = createGameElement('div','padel-2');
-    
     setPosition(pPadel2,padel2Position);
-    
     board.appendChild(pPadel2);
     //}
 }
@@ -63,7 +56,7 @@ function draw(){
     //padel1.innerHTML ='';
     drawPlayer1Padel();
     drawPlayer2Padel(); 
-    
+    drawNet();
 }
 function drawNet(){
     netState = 'block';
@@ -71,86 +64,149 @@ function drawNet(){
     board.appendChild(net)
 }
 
-function startGame() {
-    gameStarted = true;//Keep track of if game is running
-    while(gameStarted){
+function hideStartingText(){
     instructionText.style.display = 'none';// hides instruction text
     logo.style.display = 'none'; // hides game logo
-    drawNet();
-    
-    draw();
-    console.log('drawn')
-    playerKeyPress();
-    console.log('finished')
-    console.log(padel1);
-    gameStarted = false;
-    }
+
 }
 
+function showStartingText(){
+    instructionText.style.display = 'block';// shows instruction text
+    logo.style.display = 'block'; // shows game logo
+}
+function hideHtmlElements(){
+    board.innerHTML =''
+}
+
+function startGame() {
+    gameStarted = true;//Keep track of if game is running
+    //while(gameStarted){
+    hideStartingText();
+    draw();
+    console.log('drawn')
+    console.log('finished')
+    console.log(padel1);
+    document.addEventListener('keydown', player1KeyPress);
+    // document.addEventListener('keydown', player2KeyPress);
+    console.log(gameStarted)
+    console.log(keysPressed)
+    
+    
+
+//}
+
+document.onkeydown = (endGame) => {
+    if (endGame.key === 'q'){
+        gameStarted = false;
+        hideHtmlElements();
+        showStartingText();
+}
+}
+}
 //Keypress event listener and padel1 mover
-function playerKeyPress(event){
-    console.log('this time')
-    if(!gameStarted && (event.code === 'Space'|| event.key === ' '))
-        {
-            console.log("space key pressed")
-            startGame();
-        } 
-    if(event ==='ArrowUp') {   
+const keysPressed = new Set([]);
+
+function deleteKeys(key){
+    document.addEventListener('keyup', (event) => {
+    keysPressed.delete(key); // Remove the key from the pressed keys object
+    });
+}
+
+
+function player1KeyPress(event){
+    keysPressed.add(event.key);
+    //player 1
+    if(keysPressed.has('ArrowUp')) { 
         padel1Position.y--;
-    }else if (event ==='ArrowDown'){
-        padel1Position.y++;
+        board.innerHTML =''
+        draw();
+        console.log(keysPressed)
+        deleteKeys(event.key);
+        console.log(keysPressed)
+        // console.log(padel1Position)
+
     }
-    else if(event ==='s'){
+    if (keysPressed.has('ArrowDown')){
+        //keysPressed.unshift(event.key)
+        padel1Position.y++;
+        board.innerHTML =''
+        draw();
+        console.log(keysPressed)
+        deleteKeys('ArrowDown');
+        //console.log(padel1Position)
+    }
+// };
+    //player 2
+// function player2KeyPress(event){
+    // keysPressed.add(event.key);
+    if(keysPressed.has('s')){
+        //keysPressed[event.key] = true;
         padel2Position.y++;
-    }else if(event === 'w'){
+        board.innerHTML =''
+        draw();
+        console.log(keysPressed)
+        deleteKeys('s');
+        //console.log(padel2Position)
+
+    }
+    if(keysPressed.has('w')){
+        //keysPressed.unshift(event.key)
         padel2Position.y--;
+        board.innerHTML =''
+        draw();
+        console.log(keysPressed)
+        deleteKeys('w');
+        //console.log(padel2Position)
 
 
     }
 };
-document.addEventListener('keydown', playerKeyPress);
+
 // document.addEventListener('keydown',player2KeyPress)
-document.onkeydown = (playerKeyPress) => {
-    if (playerKeyPress.key === 'ArrowUp'){
-        console.log('UP')
-        padel1Position.y --;
-        board.innerHTML=''
-        drawNet();
-        draw();
-        console.log(padel1)
-        console.log(padel1Position.y)
+document.onkeydown = (start) => {
+    if(!gameStarted && (start.code === 'Space'|| start.key === ' ')){
+                    console.log("space key pressed")
+                    startGame();
     }
-    else if(playerKeyPress.key === 'ArrowDown'){
-        console.log('Down');
-        board.innerHTML='';
-        drawNet();
-        draw();
-        padel1Position.y++;
-        console.log(padel1)
-        console.log(padel1Position.y)
-    }
+}
+//     else if (playerKeyPress.key === 'ArrowUp'){
+//         console.log('UP')
+//         padel1Position.y --;
+//         board.innerHTML=''
+//         draw();
+//         console.log(padel1)
+//         console.log(padel1Position.y)
+//     }else if(playerKeyPress.key === 'ArrowDown'){
+//         console.log('Down');
+//         board.innerHTML='';
+//         draw();
+//         padel1Position.y++;
+//         console.log(padel1)
+//         console.log(padel1Position.y)
+//     }
 // }
-// document.onkeydown = (player2KeyPress) =>{
-    if(playerKeyPress.key === 'w'){
-        console.log('w');
-        board.innerHTML='';
-        drawNet();
-        draw();
-        padel2Position.y--;
-        console.log(padel2)
-        console.log(padel2Position.y);
-    }
-    else if(playerKeyPress.key === 's'){
-        console.log('s');
-        board.innerHTML='';
-        padel2Position.y++;
-        drawNet();
-        draw();
-        console.log(padel2)
-        console.log(padel2Position.y)
-}
-}
+// // document.onkeydown = (player2KeyPress) =>{
+//     if(playerKeyPress.key === 'w'){
+//         console.log('w');
+//         board.innerHTML='';
+//         draw();
+//         padel2Position.y--;
+//         console.log(padel2)
+//         console.log(padel2Position.y);
+//     }
+//     else if(playerKeyPress.key === 's'){
+//         console.log('s');
+//         board.innerHTML='';
+//         padel2Position.y++;
+//         draw();
+//         console.log(padel2)
+//         console.log(padel2Position.y)
+// }
+// }
 // creating a function to stop at limits of board
+
+
+
 
 function moveLimits(){
     if((padel1Position.y === 1) || (padel1Position.y === gridSize-6)){
