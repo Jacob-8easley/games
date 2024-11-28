@@ -23,17 +23,28 @@ body{
 .scores{
     display:flex;
     justify-content: space-between;
+    align-items: center;
     color: antiquewhite;
     font-size: 40px;
     font-weight: bolder;
-    margin: 10px 0
+    height: 60px;
+    
 }
-
+.names{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 50px;
+    color: antiquewhite;
+    font-size: 30px;
+    font-weight: bolder;
+    margin-bottom: 0;
+}
 
 #instruction-text{
     position: absolute;
     top: 70%;
-    color:antiquewhite;
+    color: antiquewhite;
     width: 300px;
     text-align: center;
     text-transform: capitalize;
@@ -47,7 +58,8 @@ body{
 
 .ball{
     background-color: antiquewhite;
-    border:#5a5a5a 1px dotted;
+    width: 10px;
+    height: 10px;
 }
 
 #net{
